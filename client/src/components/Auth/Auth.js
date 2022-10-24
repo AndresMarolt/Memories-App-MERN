@@ -44,9 +44,10 @@ const Auth = () => {
 
     const googleSuccess = (res) => {
         const result = (jwt_decode(res?.credential));
+        const token = res.credential;
 
         try {
-            dispatch({type: 'AUTH', data: { result }});
+            dispatch({type: 'AUTH', data: { result, token }});
             history.push('/');
         } catch(err) {
             console.log(err);

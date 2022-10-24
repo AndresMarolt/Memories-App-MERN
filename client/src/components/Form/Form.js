@@ -17,6 +17,11 @@ const Form = ({ currentId, setCurrentId}) => {
         if(post) setPostData(post);
     }, [post]);
     
+    const clear = () => {
+        setCurrentId(null);
+        setPostData({title: '', message: '', tags: '', selectedFile: ''});
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const userName = user?.result.name || user?.result.given_name + " " + user?.result.family_name
@@ -29,10 +34,17 @@ const Form = ({ currentId, setCurrentId}) => {
         clear();
     }
 
-    const clear = () => {
-        setCurrentId(null);
-        setPostData({title: '', message: '', tags: '', selectedFile: ''});
+    if(!user?.result?.name) {
+        return(
+            <Paper className={classes.paper}>
+                <Typography variant="h6" align="center">
+                    Please Sign In to create your own memories and like other's memories
+                </Typography>
+
+            </Paper>
+        )
     }
+
 
     return(
         <Paper className={classes.paper}>
