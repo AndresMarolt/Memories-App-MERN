@@ -2,10 +2,17 @@ import mongoose from "mongoose";
 import postMessage from "../models/postMessage.js";
 
 export const getPosts = async (req, res) => {
+    const { page } = req.query;
+    
     try {
-        console.log();
-        const postMessages = await postMessage.find();
-        res.status(200).json(postMessages)
+        const LIMIT = 8;
+        const startIndex = (Number(page) - 1) * LIMIT;      // get the starting index of every page
+        const total = await postMessage.countDocuments({});
+
+        const posts = await (await postMessage.find().sort({ _id: -1 }).limit(LIMIT)).skip(startIndex);       // sort({ _id: -1 }) gets us the newest posts first
+        console.log("LLEGA ACA");
+        console.log(posts);
+        res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
     } catch(err) {
         res.status(404).json({ message: err }); 
     }
