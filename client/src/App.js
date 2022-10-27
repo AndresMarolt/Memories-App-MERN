@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { GoogleOAuthProvider} from '@react-oauth/google'
 import { Container } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import dotenv from 'dotenv'
 
 import NavBar from "./components/NavBar/NavBar";
@@ -12,9 +13,8 @@ import PostDetails from "./components/PostDetails/PostDetails"
 dotenv.config();
 
 const App = () => {
-
+    
     const user = JSON.parse(localStorage.getItem('profile'));
-    console.log(user);
 
     return(
         <GoogleOAuthProvider clientId={`${process.env.REACT_APP_PUBLIC_GOOGLE_API_TOKEN}`}>

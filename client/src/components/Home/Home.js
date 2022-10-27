@@ -27,12 +27,6 @@ const Home = () => {
     const classes = useStyles();
     const [search, setSearch] = useState("");
     const [tags, setTags] = useState([]);
-    
-
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [dispatch, currentId]);
-
 
     const searchPost = () => {
         if(search.trim() || tags) {
@@ -91,9 +85,11 @@ const Home = () => {
                     
                     <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
-                    <Paper elevation={6}>
-                        <Pagination />
-                    </Paper>
+                    {(!searchQuery && !tags.length) && (
+                        <Paper elevation={6} className={classes.pagination}>
+                            <Pagination page={page}/>
+                        </Paper>
+                    )}
                 </Grid>
             </Grid>
         </Container>
