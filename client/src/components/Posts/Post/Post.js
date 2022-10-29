@@ -31,15 +31,11 @@ const Post = ({ post, setCurrentId }) => {
         return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     };
 
-    // const openPost = () => {
-    //     history.push(`/post/${post._id}`);
-    // }
 
     return(
         <Card className={classes.card} raised elevation={6}>
             <Link
                 style={{textDecoration: "none"}}
-                // onClick={openPost}
                 to={`/posts/${post._id}`}
             >
                 <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />

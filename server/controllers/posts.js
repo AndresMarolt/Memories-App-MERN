@@ -30,14 +30,13 @@ export const getPost = async (req, res) => {
 
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query;
-
     try {
         const title = new RegExp(searchQuery, 'i')
-        const posts = await postMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]  })
+        const posts = await postMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]  });
 
         res.json({ data: posts });
     } catch(err) {
-        res.status(404).json({ message: err});
+        res.status(404).json({ message: err.message});
     }
 }
 
@@ -88,6 +87,10 @@ export const likePost = async (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post with that ID");
 
     const post = await postMessage.findById(id);
+    console.log("ID");
+    console.log(id);
+    console.log("LIKES");
+    console.log(post.likes);
 
     const index = post.likes.findIndex((id) => id === String(req.userId));
 
