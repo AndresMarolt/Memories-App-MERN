@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { GoogleOAuthProvider} from '@react-oauth/google'
 import { Container } from "@material-ui/core";
@@ -13,8 +13,6 @@ import PostDetails from "./components/PostDetails/PostDetails"
 dotenv.config();
 
 const App = () => {
-    
-    const user = JSON.parse(localStorage.getItem('profile'));
 
     return(
         <GoogleOAuthProvider clientId={`${process.env.REACT_APP_PUBLIC_GOOGLE_API_TOKEN}`}>
@@ -26,7 +24,7 @@ const App = () => {
                         <Route path="/posts" exact component={Home} />
                         <Route path="/posts/search" exact component={Home} />
                         <Route path="/posts/:id" component={PostDetails} />
-                        <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
+                        <Route path="/auth" exact component={() => (!JSON.parse(localStorage.getItem('profile')) ? <Auth /> : <Redirect to="/posts" />)} />
                     </Switch>
 
                 </Container>

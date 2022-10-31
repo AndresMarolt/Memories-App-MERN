@@ -21,6 +21,13 @@ export default makeStyles(() => ({
         height: '100%',
         position: 'relative',
       },
+      cardButton: {
+        textDecoration: "none", 
+        cursor: "pointer", 
+        backgroundColor: "inherit", 
+        border: "none", 
+        textAlign: "left"
+      },
       overlay: {
         position: 'absolute',
         top: '20px',
@@ -49,5 +56,5 @@ export default makeStyles(() => ({
         padding: '0 16px 8px 16px',
         display: 'flex',
         justifyContent: 'space-between',
-      },
+      }
 }))

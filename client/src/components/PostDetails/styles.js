@@ -17,11 +17,13 @@ export default makeStyles((theme) => ({
     },
   },
   section: {
+    width: '65%',
     borderRadius: '20px',
     margin: '10px',
     flex: 1,
   },
   imageSection: {
+    width: '35%',
     marginLeft: '20px',
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
@@ -40,6 +42,6 @@ export default makeStyles((theme) => ({
     display: 'flex', justifyContent: 'space-between'
   },
   commentsInnerContainer: {
-    height: '200px', overflowY: 'auto', marginRight: '30px'
+    height: '200px', overflowY: 'auto', marginRight: '30px', width: '80%'
   }
 }));

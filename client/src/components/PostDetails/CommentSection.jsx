@@ -62,8 +62,6 @@ const CommentSection = ({ post }) => {
                 (
                     <Typography gutterBottom variant="h6">Log-in to comment!</Typography>
                 )
-            
-            
             }
             </div>
         </div>
