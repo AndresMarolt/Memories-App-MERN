@@ -14,9 +14,13 @@ const CommentSection = ({ post }) => {
     const commentsRef = useRef();
 
     const handleClick = async () => {
-        const finalComment = `${user?.result?.name || user?.result?.given_name }: ${comment}`
+        const sentComment = {
+            authorId: user?.result.id || user?.result.sub ,
+            name: user?.result.name || user?.result.given_name,
+            text: comment
+        }
 
-        const newComments = await dispatch(commentPost(finalComment, post._id));
+        const newComments = await dispatch(commentPost(sentComment, post._id));
 
         setComments(newComments);
         setComment('');
@@ -30,12 +34,30 @@ const CommentSection = ({ post }) => {
                 <div className={classes.commentsInnerContainer} >
                     <Typography gutterBottom variant="h6">Comments</Typography>
 
-                    { comments.map((comment, index) => (
-                        <Typography key={index} gutterBottom variant="subtitle1">
-                            <strong>{comment.split(': ')[0]}</strong>
-                            {comment.split(':')[1]}
-                        </Typography>
-                    )) }
+                    { comments?.map((comment, index) => {
+                        console.log("COMMENT: ");
+                        console.log(comment.text);
+                        console.log("INDEX:");
+                        console.log(index);
+                        return (comment?.authorId === user?.result.id || comment?.authorId === user?.result.sub) ? (
+                            <div key={index} >
+                                <Typography gutterBottom variant="subtitle1">
+                                    <strong>{comment.name}:</strong>
+                                    &nbsp; {comment.text}
+                                </Typography>
+
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </div>
+                            ) : (
+                            <div key={index} >
+                                <Typography gutterBottom variant="subtitle1">
+                                    <strong>{comment.name}:</strong>
+                                    &nbsp; {comment.text}
+                                </Typography>
+                            </div>
+                            )
+                    }) }
                     <div ref={commentsRef} />
                 </div>
 

@@ -81,6 +81,10 @@ export const commentPost = (value, id) => async (dispatch) => {
     try { 
         const { data } = await api.commentPost(value, id);
 
+        console.log("DATA");
+        console.log(data);
+
+
         dispatch({ type: COMMENT, payload: data })
 
         return data.comments;
