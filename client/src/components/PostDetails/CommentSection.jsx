@@ -1,9 +1,10 @@
 import React, {useState, useRef} from "react";
 import { Typography, TextField, Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
+import { v4 as uuid } from 'uuid'
 
 import useStyles from './styles'
-import { commentPost } from '../../actions/posts'
+import { commentPost, deleteComment } from '../../actions/posts'
 
 const CommentSection = ({ post }) => {
     const classes = useStyles();
@@ -15,6 +16,7 @@ const CommentSection = ({ post }) => {
 
     const handleClick = async () => {
         const sentComment = {
+            commentId: uuid(),
             authorId: user?.result.id || user?.result.sub ,
             name: user?.result.name || user?.result.given_name,
             text: comment
@@ -26,6 +28,14 @@ const CommentSection = ({ post }) => {
         setComment('');
 
         commentsRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+
+    const handleEdit = async () => {
+
+    }
+
+    const handleDelete = async (commentId) => {
+        dispatch(deleteComment(commentId, post._id));
     }
 
     return (
@@ -46,8 +56,8 @@ const CommentSection = ({ post }) => {
                                     &nbsp; {comment.text}
                                 </Typography>
 
-                                <button>Edit</button>
-                                <button>Delete</button>
+                                <button onClick={handleEdit} style={{cursor: 'pointer'}}>Edit</button>
+                                <button onClick={() => handleDelete(comment.commentId)} style={{cursor: 'pointer'}}>Delete</button>
                             </div>
                             ) : (
                             <div key={index} >

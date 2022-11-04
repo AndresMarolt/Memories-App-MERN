@@ -93,3 +93,12 @@ export const commentPost = (value, id) => async (dispatch) => {
         console.log(err);
     }
 }
+
+export const deleteComment = (commentId, postId) => async (dispatch) => {
+    try {
+        const postWithUpdatedComments = await api.deleteComment(commentId, postId);
+        console.log(postWithUpdatedComments);
+    } catch(err) {
+        console.log(err);
+    }
+}
