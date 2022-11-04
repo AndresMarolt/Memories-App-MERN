@@ -23,3 +23,9 @@ export const signUp = (formData) => API.post('/users/signup', formData);
 
 export const commentPost = (value, id) => API.post(`/posts/${id}/commentPost`, { value });
 export const deleteComment = (commentId, postId) => API.patch(`/posts/${postId}/commentPost/${commentId}`)
+export const editComment = (value, postId) => {
+    console.log("LLEGA AL LLAMADO DE API");
+    console.log(value);
+    console.log(postId);
+    return API.patch(`/posts/${postId}/commentPost/`, { value })
+} 

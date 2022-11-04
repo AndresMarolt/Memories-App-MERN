@@ -140,14 +140,39 @@ export const deleteComment = async (req, res) => {
     
         const post = await postMessage.findById(id);
     
-        const postComments = post.comments.filter((comment) => comment.commentId !== String(commentId));
-        console.log(postComments);
-    
-        const updatedPost = await postMessage.findByIdAndUpdate(id, {...post, comments: postComments}, {new: true} );
+        const postComments = post.comments.filter((comment) => {
+            return comment.commentId !== commentId;
+        })
 
-        res.json(updatedPost);
+        const updatedPost = await postMessage.findByIdAndUpdate(id, {comments: postComments}, {new: true} );
+        res.json(updatedPost._doc);
     } catch (err) {
         console.log(err);
     }
+}
 
+export const editComment = async (req, res) => {
+    const { commentId, text } = req.body.value; 
+    const { id } = req.params;
+
+    try {
+        if(!req.userId) return res.json({ message: "Unauthenticated" });
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post with that ID");
+
+        const post = await postMessage.findById(id);
+
+        const postComments = post.comments.map((comment) => {
+            if(comment.commentId === commentId) {
+                comment.text = text
+            }
+            return comment;
+        })
+
+        const updatedPost = await postMessage.findByIdAndUpdate(id, {comments: postComments}, {new: true})
+        
+        res.json(updatedPost);
+    } catch(err) {
+        console.log(err);
+    }
 }
